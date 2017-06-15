@@ -3,7 +3,7 @@ A library for creating RSS feeds written in PHP 7.
 
 
 ## Installation with Composer
-This package is available on [Composer](https://packagist.org/packages/lib16/rss">packagist</a>, so you can use <a href="https://getcomposer.org) to install it.If applicable add the following to your project's `composer.json` file:
+This package is available on [packagist](https://packagist.org/packages/lib16/rss), so you can use [Composer](https://getcomposer.org) to install it.If applicable add the following to your project's `composer.json` file:
 
 ```json
 {
@@ -18,7 +18,7 @@ composer require lib16/rss:dev-master
 ```
 
 ## Basic Usage
-The following example markup is taken from [en.wikipedia.org/wiki/Rss](https://en.wikipedia.org/wiki/Rss)
+Example markup is taken from [en.wikipedia.org/wiki/Rss](https://en.wikipedia.org/wiki/Rss)
 
 ```php
 &lt;?php
