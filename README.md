@@ -21,7 +21,7 @@ composer require lib16/rss:dev-master
 Example markup is taken from [en.wikipedia.org/wiki/Rss](https://en.wikipedia.org/wiki/Rss)
 
 ```php
-&lt;?php
+<?php
 
 require_once 'vendor/autoload.php';
 
@@ -33,16 +33,16 @@ $channel = Channel::create('RSS Title',
         'This is an example of an RSS feed',
         'http://www.example.com/main.html');
 $channel
-        -&gt;pubDate(DateTime::create('2010-09-06 00:01 +0'))
-        -&gt;lastBuildDate(DateTime::create('2009-09-06 16:20 +0'))
-        -&gt;ttl(1800);
+        ->pubDate(DateTime::create('2010-09-06 00:01 +0'))
+        ->lastBuildDate(DateTime::create('2009-09-06 16:20 +0'))
+        ->ttl(1800);
 
 $channel
-        -&gt;item('Example entry',
+        ->item('Example entry',
                 'Here is some text containing an interesting description.',
                 'http://www.example.com/blog/post/1')
-        -&gt;guid('7bd204c6-1655-4c27-aeee-53f933c5395f', true)
-        -&gt;pubDate(DateTime::create('2009-09-06 16:20 +0'));
+        ->guid('7bd204c6-1655-4c27-aeee-53f933c5395f', true)
+        ->pubDate(DateTime::create('2009-09-06 16:20 +0'));
 
 RssMarkup::headerfields();
 print $channel;
@@ -50,22 +50,22 @@ print $channel;
 … generates the following output:
 
 ```xml
-&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;rss version="2.0"&gt;
-    &lt;channel&gt;
-        &lt;title&gt;RSS Title&lt;/title&gt;
-        &lt;description&gt;This is an example of an RSS feed&lt;/description&gt;
-        &lt;link&gt;http://www.example.com/main.html&lt;/link&gt;
-        &lt;pubDate&gt;Mon, 06 Sep 2010 00:01:00 +0000&lt;/pubDate&gt;
-        &lt;lastBuildDate&gt;Sun, 06 Sep 2009 16:20:00 +0000&lt;/lastBuildDate&gt;
-        &lt;ttl&gt;1800&lt;/ttl&gt;
-        &lt;item&gt;
-            &lt;title&gt;Example entry&lt;/title&gt;
-            &lt;description&gt;Here is some text containing an interesting description.&lt;/description&gt;
-            &lt;link&gt;http://www.example.com/blog/post/1&lt;/link&gt;
-            &lt;guid isPermaLink="true"&gt;7bd204c6-1655-4c27-aeee-53f933c5395f&lt;/guid&gt;
-            &lt;pubDate&gt;Sun, 06 Sep 2009 16:20:00 +0000&lt;/pubDate&gt;
-        &lt;/item&gt;
-    &lt;/channel&gt;
-&lt;/rss&gt;
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        <title>RSS Title</title>
+        <description>This is an example of an RSS feed</description>
+        <link>http://www.example.com/main.html</link>
+        <pubDate>Mon, 06 Sep 2010 00:01:00 +0000</pubDate>
+        <lastBuildDate>Sun, 06 Sep 2009 16:20:00 +0000</lastBuildDate>
+        <ttl>1800</ttl>
+        <item>
+            <title>Example entry</title>
+            <description>Here is some text containing an interesting description.</description>
+            <link>http://www.example.com/blog/post/1</link>
+            <guid isPermaLink="true">7bd204c6-1655-4c27-aeee-53f933c5395f</guid>
+            <pubDate>Sun, 06 Sep 2009 16:20:00 +0000</pubDate>
+        </item>
+    </channel>
+</rss>
 ```
