@@ -9,16 +9,24 @@ class Channel extends XmlWrapper
 {
 	use Category, PubDate;
 
+	public static function create(string $title, string $description, string $link,
+			string $language = null, DateTime $lastBuildDate = null, DateTime $pubDate = null,
+			int $ttl = null): self
+			{
+				return Rss::createChannel(
+						$title, $description, $link, $language, $lastBuildDate, $pubDate, $ttl);
+	}
+
 	public function cloud(string $domain, int $port,
 			string $path, string $registerProcedure, Protocol $protocol): self
-	{
-		$this->xml->append('cloud')
+			{
+				$this->xml->append('cloud')
 				->attrib('domain', $domain)
 				->attrib('port', $port)
 				->attrib('path', $path)
 				->attrib('registerProcedure', $registerProcedure)
 				->attrib('protocol', $protocol);
-		return $this;
+				return $this;
 	}
 
 	public function copyright(string $copyright): self
@@ -41,28 +49,28 @@ class Channel extends XmlWrapper
 
 	public function image(string $url, string $title, string $link,
 			int $width = null, int $height = null, string $description = null): Image
-	{
-		$image = new Image($this->xml->append('image'));
-		$image->getXml()
+			{
+				$image = new Image($this->xml->append('image'));
+				$image->getXml()
 				->appendLeaf('url', $url)
 				->appendLeaf('title', $title)
 				->appendLeaf('link', $link)
 				->appendLeaf('width', $width)
 				->appendLeaf('height', $height)
 				->appendLeaf('description', $description);
-		return $image;
+				return $image;
 	}
 
 	public function item(string $title = null,
 			string $description = null, string $link = null, DateTime $pubDate = null): Item
-	{
-		$item = new Item($this->xml->append('item'));
-		$item->getXml()
+			{
+				$item = new Item($this->xml->append('item'));
+				$item->getXml()
 				->appendLeaf('title', $title)
 				->appendLeaf('description', $description)
 				->appendLeaf('link', $link)
 				->appendLeaf('pubDate', $pubDate);
-		return $item;
+				return $item;
 	}
 
 	public function language(string $language): self
@@ -110,10 +118,10 @@ class Channel extends XmlWrapper
 	public function textInput(string $title, string $description, string $name, string $link): self
 	{
 		$this->xml->append('textInput')
-				->appendLeaf('title', $title)
-				->appendLeaf('description', $description)
-				->appendLeaf('name', $name)
-				->appendLeaf('link', $link);
+		->appendLeaf('title', $title)
+		->appendLeaf('description', $description)
+		->appendLeaf('name', $name)
+		->appendLeaf('link', $link);
 		return $this;
 	}
 
