@@ -9,7 +9,6 @@
 	],
 	"homepage" : "https://github.com/lib16/rss-builder-php",
 	"license" : "MIT",
-	"minimum-stability" : "dev",
 	"require" : {
 		"php" : ">=7.0",
 		"lib16/calendar" : "^1.0",
