@@ -3,18 +3,11 @@ A library for creating RSS feeds written in PHP 7.
 
 
 ## Installation with Composer
-This package is available on [packagist](https://packagist.org/packages/lib16/rss), so you can use [Composer](https://getcomposer.org) to install it.If applicable add the following to your project's `composer.json` file:
-
-```json
-{
-    "minimum-stability": "dev",
-    "prefer-stable" : true
-}
-```
+This package is available on [packagist](https://packagist.org/packages/lib16/rss), so you can use [Composer](https://getcomposer.org) to install it.
 Run the following command in your shell:
 
 ```
-composer require lib16/rss:dev-master
+composer require lib16/rss
 ```
 
 ## Basic Usage
@@ -29,20 +22,24 @@ use Lib16\Calendar\DateTime;
 use Lib16\RSS\Channel;
 use Lib16\RSS\RssMarkup;
 
-$channel = Channel::create('RSS Title',
-        'This is an example of an RSS feed',
-        'http://www.example.com/main.html');
+$channel = Channel::create(
+    'RSS Title',
+    'This is an example of an RSS feed',
+    'http://www.example.com/main.html'
+);
 $channel
-        ->pubDate(DateTime::create('2010-09-06 00:01 +0'))
-        ->lastBuildDate(DateTime::create('2009-09-06 16:20 +0'))
-        ->ttl(1800);
+    ->pubDate(DateTime::create('2010-09-06 00:01 +0'))
+    ->lastBuildDate(DateTime::create('2009-09-06 16:20 +0'))
+    ->ttl(1800);
 
 $channel
-        ->item('Example entry',
-                'Here is some text containing an interesting description.',
-                'http://www.example.com/blog/post/1')
-        ->guid('7bd204c6-1655-4c27-aeee-53f933c5395f', true)
-        ->pubDate(DateTime::create('2009-09-06 16:20 +0'));
+    ->item(
+        'Example entry',
+        'Here is some text containing an interesting description.',
+        'http://www.example.com/blog/post/1'
+    )
+    ->guid('7bd204c6-1655-4c27-aeee-53f933c5395f', false)
+    ->pubDate(DateTime::create('2009-09-06 16:20 +0'));
 
 RssMarkup::headerfields();
 print $channel;
@@ -63,7 +60,7 @@ print $channel;
             <title>Example entry</title>
             <description>Here is some text containing an interesting description.</description>
             <link>http://www.example.com/blog/post/1</link>
-            <guid isPermaLink="true">7bd204c6-1655-4c27-aeee-53f933c5395f</guid>
+            <guid isPermaLink="false">7bd204c6-1655-4c27-aeee-53f933c5395f</guid>
             <pubDate>Sun, 06 Sep 2009 16:20:00 +0000</pubDate>
         </item>
     </channel>
