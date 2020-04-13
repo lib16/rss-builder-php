@@ -13,7 +13,10 @@
 	"require" : {
 		"php" : ">=7.0",
 		"lib16/calendar" : "^1.0",
-		"lib16/xml": "dev-master"
+		"lib16/xml" : ">=1.2.1"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "^6"
 	},
 	"autoload" : {
 		"psr-4" : {
@@ -24,7 +27,5 @@
 		"psr-4" : {
 			"Lib16\\RSS\\Tests\\" : "tests/"
 		}
-	},
-	"require-dev": {
 	}
 }
