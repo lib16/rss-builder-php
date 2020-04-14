@@ -1,0 +1,13 @@
+<phpunit>
+    <testsuite name="lib16/rss">
+        <directory>tests</directory>
+    </testsuite>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src/</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="build/logs/"/>
+    </logging>
+</phpunit>
