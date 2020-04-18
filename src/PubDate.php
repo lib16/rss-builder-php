@@ -1,14 +1,11 @@
 <?php
 namespace Lib16\RSS;
 
-use Lib16\Calendar\DateTime;
-
 trait PubDate
 {
-
-    public function pubDate(DateTime $pubDate): self
+    public function pubDate(\DateTime $pubDate = null): self
     {
-        $this->xml->append('pubDate', $pubDate->__toString());
+        $this->xml->appendDateTime('pubDate', $pubDate);
         return $this;
     }
 }

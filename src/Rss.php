@@ -1,7 +1,6 @@
 <?php
 namespace Lib16\RSS;
 
-use Lib16\Calendar\DateTime;
 use Lib16\XML\XmlWrapper;
 
 class Rss extends XmlWrapper
@@ -17,8 +16,8 @@ class Rss extends XmlWrapper
         string $description,
         string $link,
         string $language = null,
-        DateTime $lastBuildDate = null,
-        DateTime $pubDate = null,
+        \DateTime $lastBuildDate = null,
+        \DateTime $pubDate = null,
         int $ttl = null
     ): Channel {
         $channel = new Channel($this->xml->append('channel'));
@@ -27,8 +26,8 @@ class Rss extends XmlWrapper
             ->appendLeaf('description', $description)
             ->appendLeaf('link', $link)
             ->appendLeaf('language', $language)
-            ->appendLeaf('lastBuildDate', $lastBuildDate)
-            ->appendLeaf('pubDate', $pubDate)
+            ->appendDateTime('lastBuildDate', $lastBuildDate)
+            ->appendDateTime('pubDate', $pubDate)
             ->appendLeaf('ttl', $ttl);
         return $channel;
     }
@@ -38,8 +37,8 @@ class Rss extends XmlWrapper
         string $description,
         string $link,
         string $language = null,
-        DateTime $lastBuildDate = null,
-        DateTime $pubDate = null,
+        \DateTime $lastBuildDate = null,
+        \DateTime $pubDate = null,
         int $ttl = null
     ): Channel {
         return self::create()->channel(

@@ -1,7 +1,6 @@
 <?php
 namespace Lib16\RSS\Tests;
 
-use Lib16\Calendar\DateTime;
 use Lib16\RSS\Channel;
 use Lib16\RSS\Protocol;
 use Lib16\RSS\Rss;
@@ -18,8 +17,8 @@ class RssTest extends TestCase
             'lorem ipsum',
             'http://example.com/feed.rss',
             'en',
-            DateTime::create(6, 6, 2017),
-            DateTime::create(8, 6, 2017),
+            new \DateTime('2017-06-06'),
+            new \DateTime('2017-06-08'),
             180
         );
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
@@ -34,7 +33,7 @@ class RssTest extends TestCase
 		<ttl>180</ttl>
 	</channel>
 </rss>';
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual->__toString());
     }
 
     public function testChannelCreate()
@@ -44,8 +43,8 @@ class RssTest extends TestCase
             'lorem ipsum',
             'http://example.com/feed.rss',
             'en',
-            DateTime::create(6, 6, 2017),
-            DateTime::create(8, 6, 2017),
+            new \DateTime('2017-06-06'),
+            new \DateTime('2017-06-08'),
             180
         );
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
@@ -79,9 +78,9 @@ class RssTest extends TestCase
             ->docs()
             ->generator('Lorem Ipsum')
             ->language('en')
-            ->lastBuildDate(DateTime::create(6, 6, 2017))
+            ->lastBuildDate(new \DateTime('2017-06-06'))
             ->managingEditor('someone@example.com')
-            ->pubDate(DateTime::create(8, 6, 2017))
+            ->pubDate(new \DateTime('2017-06-08'))
             ->rating('Lorem Ipsum')
             ->skipDays(0, 1)
             ->skipHours(0, 1, 2)
@@ -128,7 +127,7 @@ class RssTest extends TestCase
 		<webMaster>someone@example.com</webMaster>
 	</channel>
 </rss>';
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual->__toString());
     }
 
     public function testImage()
@@ -209,7 +208,7 @@ class RssTest extends TestCase
                 'Lorem Ipsum',
                 'Lorem ipsum',
                 'http://example.com/articles/123',
-                DateTime::create(10, 6, 2017)
+                new \DateTime('2017-06-10')
             );
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
@@ -225,7 +224,7 @@ class RssTest extends TestCase
 		</item>
 	</channel>
 </rss>';
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual->__toString());
     }
 
     public function testItemMethods()
@@ -242,7 +241,7 @@ class RssTest extends TestCase
             ->guid('http://example.com/articles/123', true)
             ->guid('com.example.articles.123', false)
             ->link('http://example.com/articles/123')
-            ->pubDate(DateTime::create(10, 6, 2017))
+            ->pubDate(new \DateTime('2017-06-10'))
             ->source('Tomalak\'s Realm', 'http://www.tomalak.org/links2.xml')
             ->title('Lorem Ipsum');
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
@@ -267,6 +266,6 @@ class RssTest extends TestCase
 		</item>
 	</channel>
 </rss>';
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual->__toString());
     }
 }
