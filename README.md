@@ -15,10 +15,8 @@ Example markup is taken from [en.wikipedia.org/wiki/Rss](https://en.wikipedia.or
 
 ```php
 <?php
-
 require_once 'vendor/autoload.php';
 
-use Lib16\Calendar\DateTime;
 use Lib16\RSS\Channel;
 use Lib16\RSS\RssMarkup;
 
@@ -28,8 +26,8 @@ $channel = Channel::create(
     'http://www.example.com/main.html'
 );
 $channel
-    ->pubDate(DateTime::create('2010-09-06 00:01 +0'))
-    ->lastBuildDate(DateTime::create('2009-09-06 16:20 +0'))
+    ->pubDate(new DateTime('2010-09-06 00:01 +0'))
+    ->lastBuildDate(new DateTime('2009-09-06 16:20 +0'))
     ->ttl(1800);
 
 $channel
@@ -39,9 +37,9 @@ $channel
         'http://www.example.com/blog/post/1'
     )
     ->guid('7bd204c6-1655-4c27-aeee-53f933c5395f', false)
-    ->pubDate(DateTime::create('2009-09-06 16:20 +0'));
+    ->pubDate(new DateTime('2009-09-06 16:20 +0'));
 
-RssMarkup::headerfields();
+RssMarkup::headerfields('example');
 print $channel;
 ```
 … generates the following output:
