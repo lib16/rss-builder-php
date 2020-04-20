@@ -8,6 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class RssTest extends TestCase
 {
+    static $tz;
+
+    public function setUp()
+    {
+        self::$tz = new \DateTimeZone('UTC');
+    }
+
     public function testChannel()
     {
         $actual = Rss::create()->channel(
@@ -15,8 +22,8 @@ class RssTest extends TestCase
             'lorem ipsum',
             'http://example.com/feed.rss',
             'en',
-            new \DateTime('2017-06-06'),
-            new \DateTime('2017-06-08'),
+            new \DateTime('2017-06-06', self::$tz),
+            new \DateTime('2017-06-08', self::$tz),
             180
         );
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
@@ -26,8 +33,8 @@ class RssTest extends TestCase
 		<description>lorem ipsum</description>
 		<link>http://example.com/feed.rss</link>
 		<language>en</language>
-		<lastBuildDate>Tue, 06 Jun 2017 00:00:00 +0200</lastBuildDate>
-		<pubDate>Thu, 08 Jun 2017 00:00:00 +0200</pubDate>
+		<lastBuildDate>Tue, 06 Jun 2017 00:00:00 +0000</lastBuildDate>
+		<pubDate>Thu, 08 Jun 2017 00:00:00 +0000</pubDate>
 		<ttl>180</ttl>
 	</channel>
 </rss>';
@@ -41,8 +48,8 @@ class RssTest extends TestCase
             'lorem ipsum',
             'http://example.com/feed.rss',
             'en',
-            new \DateTime('2017-06-06'),
-            new \DateTime('2017-06-08'),
+            new \DateTime('2017-06-06', self::$tz),
+            new \DateTime('2017-06-08', self::$tz),
             180
         );
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
@@ -52,8 +59,8 @@ class RssTest extends TestCase
 		<description>lorem ipsum</description>
 		<link>http://example.com/feed.rss</link>
 		<language>en</language>
-		<lastBuildDate>Tue, 06 Jun 2017 00:00:00 +0200</lastBuildDate>
-		<pubDate>Thu, 08 Jun 2017 00:00:00 +0200</pubDate>
+		<lastBuildDate>Tue, 06 Jun 2017 00:00:00 +0000</lastBuildDate>
+		<pubDate>Thu, 08 Jun 2017 00:00:00 +0000</pubDate>
 		<ttl>180</ttl>
 	</channel>
 </rss>';
@@ -76,9 +83,9 @@ class RssTest extends TestCase
             ->docs()
             ->generator('Lorem Ipsum')
             ->language('en')
-            ->lastBuildDate(new \DateTime('2017-06-06'))
+            ->lastBuildDate(new \DateTime('2017-06-06', self::$tz))
             ->managingEditor('someone@example.com')
-            ->pubDate(new \DateTime('2017-06-08'))
+            ->pubDate(new \DateTime('2017-06-08', self::$tz))
             ->rating('Lorem Ipsum')
             ->skipDays(0, 1)
             ->skipHours(0, 1, 2)
@@ -102,9 +109,9 @@ class RssTest extends TestCase
 		<docs>http://www.rssboard.org/rss-specification</docs>
 		<generator>Lorem Ipsum</generator>
 		<language>en</language>
-		<lastBuildDate>Tue, 06 Jun 2017 00:00:00 +0200</lastBuildDate>
+		<lastBuildDate>Tue, 06 Jun 2017 00:00:00 +0000</lastBuildDate>
 		<managingEditor>someone@example.com</managingEditor>
-		<pubDate>Thu, 08 Jun 2017 00:00:00 +0200</pubDate>
+		<pubDate>Thu, 08 Jun 2017 00:00:00 +0000</pubDate>
 		<rating>Lorem Ipsum</rating>
 		<skipDays>
 			<day>0</day>
@@ -206,7 +213,7 @@ class RssTest extends TestCase
                 'Lorem Ipsum',
                 'Lorem ipsum',
                 'http://example.com/articles/123',
-                new \DateTime('2017-06-10')
+                new \DateTime('2017-06-10', self::$tz)
             );
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
@@ -218,7 +225,7 @@ class RssTest extends TestCase
 			<title>Lorem Ipsum</title>
 			<description>Lorem ipsum</description>
 			<link>http://example.com/articles/123</link>
-			<pubDate>Sat, 10 Jun 2017 00:00:00 +0200</pubDate>
+			<pubDate>Sat, 10 Jun 2017 00:00:00 +0000</pubDate>
 		</item>
 	</channel>
 </rss>';
@@ -239,7 +246,7 @@ class RssTest extends TestCase
             ->guid('http://example.com/articles/123', true)
             ->guid('com.example.articles.123', false)
             ->link('http://example.com/articles/123')
-            ->pubDate(new \DateTime('2017-06-10'))
+            ->pubDate(new \DateTime('2017-06-10', self::$tz))
             ->source('Tomalak\'s Realm', 'http://www.tomalak.org/links2.xml')
             ->title('Lorem Ipsum');
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
@@ -258,7 +265,7 @@ class RssTest extends TestCase
 			<guid isPermaLink="true">http://example.com/articles/123</guid>
 			<guid isPermaLink="false">com.example.articles.123</guid>
 			<link>http://example.com/articles/123</link>
-			<pubDate>Sat, 10 Jun 2017 00:00:00 +0200</pubDate>
+			<pubDate>Sat, 10 Jun 2017 00:00:00 +0000</pubDate>
 			<source url="http://www.tomalak.org/links2.xml">Tomalak\'s Realm</source>
 			<title>Lorem Ipsum</title>
 		</item>
