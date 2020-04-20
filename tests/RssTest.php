@@ -6,8 +6,6 @@ use Lib16\RSS\Protocol;
 use Lib16\RSS\Rss;
 use PHPUnit\Framework\TestCase;
 
-require_once 'vendor/autoload.php';
-
 class RssTest extends TestCase
 {
     public function testChannel()
