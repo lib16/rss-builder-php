@@ -1,21 +1,29 @@
 <?php
 namespace Lib16\RSS;
 
-use Lib16\XML\XmlWrapper;
+use Lib16\RSS\Traits\Description;
+use Lib16\RSS\Traits\Link;
+use Lib16\RSS\Traits\Title;
+use Lib16\XML\XmlElementWrapper;
 
-class Image extends XmlWrapper
+class Image extends XmlElementWrapper
 {
-    use Description;
+    use Description, Link, Title;
 
-    public function width(int $width): self
+    const NAME = 'image';
+
+    public function url(string $url = null): self
     {
-        $this->xml->append('width', $width);
-        return $this;
+        return $this->append('url', $url);
     }
 
-    public function height(int $height): self
+    public function width(int $width = null): self
     {
-        $this->xml->append('height', $height);
-        return $this;
+        return $this->append('width', $width);
+    }
+
+    public function height(int $height = null): self
+    {
+        return $this->append('height', $height);
     }
 }

@@ -1,12 +1,12 @@
 <?php
 namespace Lib16\RSS;
 
-trait Category
-{
+use Lib16\RSS\Traits\DomainAttribute;
+use Lib16\XML\XmlElementWrapper;
 
-    public function category(string $category, string $domain = null): self
-    {
-        $this->xml->append('category', $category)->attrib('domain', $domain);
-        return $this;
-    }
+class Category extends XmlElementWrapper
+{
+    use DomainAttribute;
+
+    const NAME = 'category';
 }

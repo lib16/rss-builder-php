@@ -1,18 +1,22 @@
 <?php
 namespace Lib16\RSS\Tests;
 
+use Lib16\Utils\Enums\Weekday;
 use Lib16\RSS\Channel;
-use Lib16\RSS\Protocol;
+use Lib16\RSS\Enums\Protocol;
 use Lib16\RSS\Rss;
 use PHPUnit\Framework\TestCase;
 
 class RssTest extends TestCase
 {
-    static $tz;
+    static $datetime1, $datetime2, $datetime3;
 
     public function setUp()
     {
-        self::$tz = new \DateTimeZone('UTC');
+        $timezone = new \DateTimeZone('UTC');
+        self::$datetime1 = new \DateTime('2017-06-06', $timezone);
+        self::$datetime2 = new \DateTime('2017-06-08', $timezone);
+        self::$datetime3 = new \DateTime('2017-06-10', $timezone);
     }
 
     public function testChannel()
@@ -22,8 +26,8 @@ class RssTest extends TestCase
             'lorem ipsum',
             'http://example.com/feed.rss',
             'en',
-            new \DateTime('2017-06-06', self::$tz),
-            new \DateTime('2017-06-08', self::$tz),
+            self::$datetime1,
+            self::$datetime2,
             180
         );
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
@@ -48,8 +52,8 @@ class RssTest extends TestCase
             'lorem ipsum',
             'http://example.com/feed.rss',
             'en',
-            new \DateTime('2017-06-06', self::$tz),
-            new \DateTime('2017-06-08', self::$tz),
+            self::$datetime1,
+            self::$datetime2,
             180
         );
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
@@ -83,11 +87,11 @@ class RssTest extends TestCase
             ->docs()
             ->generator('Lorem Ipsum')
             ->language('en')
-            ->lastBuildDate(new \DateTime('2017-06-06', self::$tz))
+            ->lastBuildDate(self::$datetime1)
             ->managingEditor('someone@example.com')
-            ->pubDate(new \DateTime('2017-06-08', self::$tz))
+            ->pubDate(self::$datetime2)
             ->rating('Lorem Ipsum')
-            ->skipDays(0, 1)
+            ->skipDays(Weekday::MON(), Weekday::TUE())
             ->skipHours(0, 1, 2)
             ->textInput(
                 'Lorem Ipsum',
@@ -114,8 +118,8 @@ class RssTest extends TestCase
 		<pubDate>Thu, 08 Jun 2017 00:00:00 +0000</pubDate>
 		<rating>Lorem Ipsum</rating>
 		<skipDays>
-			<day>0</day>
-			<day>1</day>
+			<day>Monday</day>
+			<day>Tuesday</day>
 		</skipDays>
 		<skipHours>
 			<hour>0</hour>
@@ -213,7 +217,7 @@ class RssTest extends TestCase
                 'Lorem Ipsum',
                 'Lorem ipsum',
                 'http://example.com/articles/123',
-                new \DateTime('2017-06-10', self::$tz)
+                self::$datetime3
             );
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
@@ -246,7 +250,7 @@ class RssTest extends TestCase
             ->guid('http://example.com/articles/123', true)
             ->guid('com.example.articles.123', false)
             ->link('http://example.com/articles/123')
-            ->pubDate(new \DateTime('2017-06-10', self::$tz))
+            ->pubDate(self::$datetime3)
             ->source('Tomalak\'s Realm', 'http://www.tomalak.org/links2.xml')
             ->title('Lorem Ipsum');
         $expected = '<?xml version="1.0" encoding="UTF-8" ?>
@@ -272,5 +276,27 @@ class RssTest extends TestCase
 	</channel>
 </rss>';
         $this->assertEquals($expected, $actual->__toString());
+    }
+
+    /**
+     * @dataProvider protocolProvider
+     */
+    public function testProtocol(
+        string $method,
+        string $expected
+    ) {
+        $this->assertEquals(
+            $expected,
+            call_user_func([Protocol::class, $method])->__toString()
+        );
+    }
+
+    public function protocolProvider(): array
+    {
+        return [
+            ['XML_RPC', 'xml-rpc'],
+            ['HTTP_POST', 'http-post'],
+            ['SOAP', 'soap']
+        ];
     }
 }

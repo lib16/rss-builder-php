@@ -1,11 +1,20 @@
 <?php
 namespace Lib16\RSS;
 
-use Lib16\XML\XmlWrapper;
+use Lib16\RSS\Enums\Protocol;
+use Lib16\RSS\Traits\Category;
+use Lib16\RSS\Traits\Description;
+use Lib16\RSS\Traits\Link;
+use Lib16\RSS\Traits\PubDate;
+use Lib16\RSS\Traits\Title;
+use Lib16\Utils\Enums\Weekday;
+use Lib16\XML\XmlElementWrapper;
 
-class Channel extends XmlWrapper
+class Channel extends XmlElementWrapper
 {
-    use Category, PubDate;
+    use Category, Description, Link, PubDate, Title;
+
+    const NAME = 'channel';
 
     public static function create(
         string $title,
@@ -34,31 +43,28 @@ class Channel extends XmlWrapper
         string $registerProcedure,
         Protocol $protocol
     ): self {
-        $this->xml->append('cloud')
-            ->attrib('domain', $domain)
-            ->attrib('port', $port)
-            ->attrib('path', $path)
-            ->attrib('registerProcedure', $registerProcedure)
-            ->attrib('protocol', $protocol);
+        Cloud::appendTo($this)
+            ->setDomain($domain)
+            ->setPort($port)
+            ->setPath($path)
+            ->setRegisterProcedure($registerProcedure)
+            ->setProtocol($protocol);
         return $this;
     }
 
     public function copyright(string $copyright): self
     {
-        $this->xml->append('copyright', $copyright);
-        return $this;
+        return $this->append('copyright', $copyright);
     }
 
     public function docs(): self
     {
-        $this->xml->append('docs', 'http://www.rssboard.org/rss-specification');
-        return $this;
+        return $this->append('docs', 'http://www.rssboard.org/rss-specification');
     }
 
     public function generator(string $generator): self
     {
-        $this->xml->append('generator', $generator);
-        return $this;
+        return $this->append('generator', $generator);
     }
 
     public function image(
@@ -68,16 +74,14 @@ class Channel extends XmlWrapper
         int $width = null,
         int $height = null,
         string $description = null
-    ): Image {
-        $image = new Image($this->xml->append('image'));
-        $image->getXml()
-            ->appendLeaf('url', $url)
-            ->appendLeaf('title', $title)
-            ->appendLeaf('link', $link)
-            ->appendLeaf('width', $width)
-            ->appendLeaf('height', $height)
-            ->appendLeaf('description', $description);
-        return $image;
+    ): Image { // @todo
+        return Image::appendTo($this)
+            ->url($url)
+            ->title($title)
+            ->link($link)
+            ->width($width)
+            ->height($height)
+            ->description($description);
     }
 
     public function item(
@@ -86,53 +90,45 @@ class Channel extends XmlWrapper
         string $link = null,
         \DateTime $pubDate = null
     ): Item {
-        $item = new Item($this->xml->append('item'));
-        $item->getXml()
-            ->appendLeaf('title', $title)
-            ->appendLeaf('description', $description)
-            ->appendLeaf('link', $link)
-            ->appendDateTime('pubDate', $pubDate);
-        return $item;
+        return Item::appendTo($this)
+            ->title($title)
+            ->description($description)
+            ->link($link)
+            ->pubDate($pubDate);
     }
 
-    public function language(string $language): self
+    public function language(string $language = null): self
     {
-        $this->xml->append('language', $language);
-        return $this;
+        return $this->append('language', $language);
     }
 
-    public function lastBuildDate(\DateTime $lastBuildDate): self
+    public function lastBuildDate(\DateTime $lastBuildDate = null): self
     {
-        $this->xml->appendDatetime('lastBuildDate', $lastBuildDate);
-        return $this;
+        return $this->appendDatetime('lastBuildDate', $lastBuildDate);
     }
 
-    public function managingEditor(string $email): self
+    public function managingEditor(string $email = null): self
     {
-        $this->xml->append('managingEditor', $email);
-        return $this;
+        return $this->append('managingEditor', $email);
     }
 
-    public function rating(string $rating): self
+    public function rating(string $rating = null): self
     {
-        $this->xml->append('rating', $rating);
-        return $this;
+        return $this->append('rating', $rating);
     }
 
-    public function skipDays(int ...$day): self
+    public function skipDays(Weekday ...$days): self
     {
-        $skipDays = $this->xml->append('skipDays');
-        foreach ($day as $day) {
-            $skipDays->append('day', $day);
+        if ($days) {
+            SkipDays::appendTo($this)->day(...$days);
         }
         return $this;
     }
 
-    public function skipHours(int ...$hour): self
+    public function skipHours(int ...$hours): self
     {
-        $skipHours = $this->xml->append('skipHours');
-        foreach ($hour as $hour) {
-            $skipHours->append('hour', $hour);
+        if ($hours) {
+            SkipHours::appendTo($this)->hour(...$hours);
         }
         return $this;
     }
@@ -143,23 +139,21 @@ class Channel extends XmlWrapper
         string $name,
         string $link
     ): self {
-        $this->xml->append('textInput')
-            ->appendLeaf('title', $title)
-            ->appendLeaf('description', $description)
-            ->appendLeaf('name', $name)
-            ->appendLeaf('link', $link);
+        TextInput::appendTo($this)
+            ->title($title)
+            ->description($description)
+            ->name($name)
+            ->link($link);
         return $this;
     }
 
-    public function ttl(int $minutes): self
+    public function ttl(int $minutes = null): self
     {
-        $this->xml->append('ttl', $minutes);
-        return $this;
+        return $this->append('ttl', $minutes);
     }
 
-    public function webMaster(string $email): self
+    public function webMaster(string $email = null): self
     {
-        $this->xml->append('webMaster', $email);
-        return $this;
+        return $this->append('webMaster', $email);
     }
 }

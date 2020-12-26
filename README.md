@@ -1,7 +1,7 @@
 # Lib16 RSS Builder for PHP 7
 A library for creating RSS feeds written in PHP 7.
 
-[![Build Status](https://travis-ci.org/lib16/rss-builder-php.svg?branch=master)](https://travis-ci.org/lib16/rss-builder-php)
+[![Build Status](https://travis-ci.com/lib16/rss-builder-php.svg?branch=master)](https://travis-ci.com/lib16/rss-builder-php)
 
 ## Installation with Composer
 This package is available on [packagist](https://packagist.org/packages/lib16/rss), so you can use [Composer](https://getcomposer.org) to install it.

@@ -1,8 +1,8 @@
 <phpunit bootstrap="tests/bootstrap.php">
     <testsuites>
-	    <testsuite name="lib16/rss">
-	        <directory>tests</directory>
-	    </testsuite>
+        <testsuite name="lib16/rss">
+            <directory>tests</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">

@@ -1,14 +1,15 @@
 <?php
 namespace Lib16\RSS;
 
-use Lib16\XML\XmlWrapper;
+use Lib16\XML\XmlElementWrapper;
 
-class Rss extends XmlWrapper
+class Rss extends XmlElementWrapper
 {
+    const NAME = 'rss';
 
     public static function create(): self
     {
-        return new Rss(RssMarkup::createRoot('rss')->attrib('version', '2.0'));
+        return (new static(RssMarkup::createRoot(static::NAME)))->attrib('version', '2.0');
     }
 
     public function channel(
@@ -20,16 +21,14 @@ class Rss extends XmlWrapper
         \DateTime $pubDate = null,
         int $ttl = null
     ): Channel {
-        $channel = new Channel($this->xml->append('channel'));
-        $channel->getXml()
-            ->appendLeaf('title', $title)
-            ->appendLeaf('description', $description)
-            ->appendLeaf('link', $link)
-            ->appendLeaf('language', $language)
-            ->appendDateTime('lastBuildDate', $lastBuildDate)
-            ->appendDateTime('pubDate', $pubDate)
-            ->appendLeaf('ttl', $ttl);
-        return $channel;
+        return Channel::appendTo($this)
+            ->title($title)
+            ->description($description)
+            ->link($link)
+            ->language($language)
+            ->lastBuildDate($lastBuildDate)
+            ->pubDate($pubDate)
+            ->ttl($ttl);
     }
 
     public static function createChannel(
