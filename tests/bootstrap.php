@@ -1,6 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 require_once 'vendor/lib16/utils/src/enums/Enum.php';
+require_once 'vendor/lib16/utils/src/enums/Weekday.php';
 require_once 'src/enums/Protocol.php';
 require_once 'src/traits/Category.php';
 require_once 'src/traits/Description.php';
