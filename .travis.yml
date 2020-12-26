@@ -12,9 +12,8 @@ env:
     - XDEBUG_MODE=coverage
 
 before_script:
-  - composer self-update
   - composer clear-cache
-  - composer install --no-interaction
+  - composer install
   
 script:
   - vendor/bin/phpunit
